@@ -12,6 +12,6 @@ spec:
     spec:
       containers:
       - name: data-transfer
-        image: quay.io/ukhomeofficedigital/data-transfer 
+        image: quay.io/ukhomeofficedigital/data-transfer:v0.1.0 
         securityContext:
           runAsNonRoot: true
