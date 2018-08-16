@@ -1,0 +1,17 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: data-transfer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: data-transfer
+    spec:
+      containers:
+      - name: data-transfer
+        image: quay.io/ukhomeofficedigital/data-transfer 
+        securityContext:
+          runAsNonRoot: true
