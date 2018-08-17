@@ -26,13 +26,13 @@ spec:
           - name: READ_AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
-                name: s3-secret
-                key: access_key_id
+                name: dq-s4-data-ingest
+                key: S3_DQ_ACCESS_KEY_ID
           - name: READ_AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                name: s3-secret
-                key: secret_access_key
+                name: dq-s4-data-ingest
+                key: S3_DQ_SECRET_ACCESS_KEY
           - name: READ_AWS_S3_BUCKET_NAME
             value: 's3-dq-test'
           - name: READ_AWS_S3_HOST
@@ -41,13 +41,13 @@ spec:
           - name: WRITE_AWS_ACCESS_KEY_ID
             valueFrom:
               secretKeyRef:
-                name: s3-secret
-                key: access_key_id
+                name: dq-s4-data-ingest
+                key: S3_DQ_ACCESS_KEY_ID
           - name: WRITE_AWS_SECRET_ACCESS_KEY
             valueFrom:
               secretKeyRef:
-                name: s3-secret
-                key: secret_access_key
+                name: dq-s4-data-ingest
+                key: S3_DQ_SECRET_ACCESS_KEY
           - name: WRITE_AWS_S3_BUCKET_NAME
             value: 's3-dq-test'
           - name: WRITE_AWS_S3_HOST
