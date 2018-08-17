@@ -12,6 +12,46 @@ spec:
     spec:
       containers:
       - name: data-transfer
-        image: quay.io/ukhomeofficedigital/data-transfer:v0.1.1 
+        image: quay.io/ukhomeofficedigital/data-transfer:v0.1.1
+        env:
+          - name: READ_STORAGE_TYPE
+            value: 'datatransfer.storage.S3Storage'
+          - name: WRITE_STORAGE_TYPE
+            value: 'datatransfer.storage.S3Storage'
+          - name: INGEST_SOURCE_PATH
+            value: 's4-app-in'
+          - name: INGEST_DEST_PATH
+            value: 's4-app-out'
+
+          - name: READ_AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: access_key_id
+          - name: READ_AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: secret_access_key
+          - name: READ_AWS_S3_BUCKET_NAME
+            value: 's3-dq-test'
+          - name: READ_AWS_S3_HOST
+            value: 'http://s3.amazonaws.com'
+
+          - name: WRITE_AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: access_key_id
+          - name: WRITE_AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: s3-secret
+                key: secret_access_key
+          - name: WRITE_AWS_S3_BUCKET_NAME
+            value: 's3-dq-test'
+          - name: WRITE_AWS_S3_HOST
+            value: 'http://s3.amazonaws.com'
+
         securityContext:
           runAsNonRoot: true
