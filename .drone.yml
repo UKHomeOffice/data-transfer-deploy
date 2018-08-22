@@ -21,6 +21,7 @@ pipeline:
       - NOTPROD_READ_STORAGE_TYPE
       - NOTPROD_WRITE_STORAGE_TYPE
       - NOTPROD_AWS_HOST
+      - NOTPROD_AWS_REGION
     when:
       event: [push, tag, deployment]
 
