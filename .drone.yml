@@ -1,0 +1,42 @@
+pipeline:
+
+  deploy_to_dev:
+    image: quay.io/ukhomeofficedigital/kd
+    environment:
+      - INSECURE_SKIP_TLS_VERIFY=true
+    commands:
+      - export KUBE_NAMESPACE=$$NOTPROD_KUBE_NAMESPACE
+      - export KUBE_TOKEN=$$NOTPROD_KUBE_TOKEN
+      - export KUBE_SERVER=$$NOTPROD_KUBE_SERVER
+      - kd -f secret.yml -f deployment.yml
+    secrets:
+      - NOTPROD_KUBE_NAMESPACE
+      - NOTPROD_KUBE_TOKEN
+      - NOTPROD_KUBE_SERVER
+      - NOTPROD_AWS_ACCESS_KEY_ID
+      - NOTPROD_AWS_SECRET_ACCESS_KEY
+      - NOTPROD_BUCKET_NAME
+      - NOTPROD_INPUT_LOCATION
+      - NOTPROD_DEST_LOCATION
+      - NOTPROD_READ_STORAGE_TYPE
+      - NOTPROD_WRITE_STORAGE_TYPE
+      - NOTPROD_AWS_HOST
+    when:
+      event: [push, tag, deployment]
+
+  deploy_to_prod:
+    image: quay.io/ukhomeofficedigital/kd
+    environment:
+      - INSECURE_SKIP_TLS_VERIFY=true
+    commands:
+      - export KUBE_NAMESPACE=$$PROD_KUBE_NAMESPACE
+      - export KUBE_TOKEN=$$PROD_KUBE_TOKEN
+      - export KUBE_SERVER=$$PROD_KUBE_SERVER
+      - kd -f deployment.yml
+    secrets:
+      - NOTPROD_KUBE_NAMESPACE
+      - NOTPROD_KUBE_TOKEN
+      - NOTPROD_KUBE_SERVER
+    when:
+      environment: production
+      event: deployment

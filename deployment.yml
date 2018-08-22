@@ -1,0 +1,90 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: data-transfer
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: data-transfer
+    spec:
+      containers:
+      - name: data-transfer
+        image: quay.io/ukhomeofficedigital/data-transfer:v0.1.1
+        env:
+          - name: READ_STORAGE_TYPE
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_READ_STORAGE_TYPE
+
+          - name: WRITE_STORAGE_TYPE
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_WRITE_STORAGE_TYPE
+
+          - name: INGEST_SOURCE_PATH
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_INPUT_LOCATION
+
+          - name: INGEST_DEST_PATH
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_DEST_LOCATION
+
+          - name: READ_AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_ACCESS_KEY_ID
+
+          - name: READ_AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_SECRET_ACCESS_KEY
+
+          - name: READ_AWS_S3_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_BUCKET_NAME
+
+          - name: READ_AWS_S3_HOST
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_HOST
+
+          - name: WRITE_AWS_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_ACCESS_KEY_ID
+
+          - name: WRITE_AWS_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_SECRET_ACCESS_KEY
+
+          - name: WRITE_AWS_S3_BUCKET_NAME
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_BUCKET_NAME
+
+          - name: WRITE_AWS_S3_HOST
+            valueFrom:
+              secretKeyRef:
+                name: data-transfer-notprod
+                key: NOTPROD_AWS_HOST
+                
+        securityContext:
+          runAsNonRoot: true
